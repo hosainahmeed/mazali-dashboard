@@ -1,87 +1,115 @@
 import React, { useState, useCallback } from "react";
-import { Card, Typography, Modal, Form, Input, Button, Radio } from "antd";
+import { Card, Typography, Modal, Form, Input, Button, Select } from "antd";
 import PageHeading from "../../Components/Shared/PageHeading";
-import JoditComponent from "../../Components/Shared/JoditComponent";
-
-// Constants
-const FEATURES = [
-  "Monthly Subscriptions",
-  "Yearly Subscriptions",
-  "One Time Payment",
-  "Recurring Payment",
-  "Customizable Plans",
-  "Plan Upgrades/Downgrades",
-  "Pause/Resume Subscription",
-  "Cancel Subscription",
-];
+import { FaEdit } from "react-icons/fa";
 
 const PRICING_PLANS = [
-  { title: "Starter", price: "$4.99", features: FEATURES.slice(0, 3) },
-  { title: "Pro", price: "$9.99", features: FEATURES.slice(0, 6) },
-  { title: "Business", price: "$19.99", features: FEATURES },
+  {
+    title: "Starter",
+    price: "9.99",
+    numSearch: 3,
+    numMinutes: 5,
+    description: "Get a head start on your reselling career",
+    planDuration: "monthly", // Default plan duration
+  },
+  {
+    title: "Pro",
+    price: "49.99",
+    numSearch: 5,
+    numMinutes: 3,
+    description: "Grow your reselling career industry",
+    planDuration: "monthly", // Default plan duration
+  },
+  {
+    title: "Business",
+    price: "99.99",
+    numSearch: 15,
+    numMinutes: 2,
+    description: "Beat your competition instantly",
+    planDuration: "monthly", // Default plan duration
+  },
 ];
 
-// Reusable Plan Card Component
-const PlanCard = ({ plan, onEdit }) => (
-  <Card
-    headStyle={{ border: "none" }}
-    className="!bg-gradient-to-r !p-3 w-full h-full !from-[#067E65] !border-none !to-[#094c3f]"
-    title={
-      <div className="flex items-center justify-center flex-col">
-        <h1 className="text-2xl text-white font-semibold">{plan.title}</h1>
-        <div className="flex gap-2">
-          <h1 className="text-[60px] text-white">{plan.price}</h1>
-          <small className="text-base text-white mt-12">/ monthly</small>
+const PlanCard = ({ plan, onEdit }) => {
+  const billingCycle = plan.planDuration === "monthly" ? "monthly" : "yearly";
+
+  const features = [
+    plan.description,
+    "Access to bi-weekly auto-generated min/max prices",
+    `Number of Searches: ${plan.numSearch}`,
+    `${plan.numMinutes} Minute Notification Time`,
+  ];
+
+  return (
+    <Card
+      headStyle={{ border: "none" }}
+      className="!bg-gradient-to-r !p-3 w-full h-full !from-[#067E65] !border-none !to-[#094c3f]"
+      title={
+        <div className="flex items-center justify-center flex-col">
+          <h1 className="text-2xl text-white font-semibold">{plan.title}</h1>
+          <div className="flex gap-2">
+            <h1 className="text-[60px] text-white">${plan.price}</h1>
+            <small className="text-base text-white mt-12">
+              / {billingCycle}
+            </small>
+          </div>
+        </div>
+      }
+    >
+      <div className="bg-white w-full h-[300px] flex-col flex items-start p-3 rounded-md justify-between">
+        <div>
+          <Typography.Title level={3}>Features:</Typography.Title>
+          <Typography.Text type="secondary">
+            <ul className="list-disc pl-4">
+              {features.map((feature, idx) => (
+                <li key={idx}>{feature}</li>
+              ))}
+            </ul>
+          </Typography.Text>
         </div>
       </div>
-    }
-  >
-    <div className="bg-white w-full h-[300px] flex-col flex items-start p-3 rounded-md justify-between">
-      <div>
-        <Typography.Title level={3}>Features:</Typography.Title>
-        <Typography.Text type="secondary">
-          <ul className="list-disc pl-4">
-            {plan.features.map((feature, idx) => (
-              <li key={idx}>{feature}</li>
-            ))}
-          </ul>
-        </Typography.Text>
-      </div>
-      <Button onClick={() => onEdit(plan)}>Edit</Button>
-    </div>
-  </Card>
-);
+      <Button shape="circle" className="mt-3" onClick={() => onEdit(plan)}>
+        <FaEdit />
+      </Button>
+    </Card>
+  );
+};
 
-// Main Subscription Component
 function Subscription() {
   const [pricing, setPricing] = useState(PRICING_PLANS);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [editedPrice, setEditedPrice] = useState("");
-  const [planDuration, setPlanDuration] = useState("year");
-  const [price, setPrice] = useState("");
-  const [numSearch, setNumSearch] = useState("");
-  const [numMinutes, setNumMinutes] = useState(0);
-  const [description, setDescription] = useState("");
+  const [form] = Form.useForm(); // Ant Design Form instance
 
-  const handleEditClick = useCallback((plan) => {
-    setSelectedPlan(plan);
-    setEditedPrice(plan.price);
-    setDescription(plan.features.join(", "));
-    setIsModalOpen(true);
+  const handleEditClick = useCallback(
+    (plan) => {
+      setSelectedPlan(plan);
+      form.setFieldsValue({
+        planDuration: plan.planDuration, // Set the current plan duration
+        price: plan.price,
+        numSearch: plan.numSearch,
+        numMinutes: plan.numMinutes,
+      });
+      setIsModalOpen(true);
+    },
+    [form]
+  );
+
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
   }, []);
 
-  const handleCancel = useCallback(() => setIsModalOpen(false), []);
+  const handleSaveChanges = useCallback(
+    (values) => {
+      const updatedPlan = { ...selectedPlan, ...values };
 
-  const handleSaveChanges = useCallback(() => {
-    console.log("Plan Duration:", planDuration);
-    console.log("Updated Price:", price);
-    console.log("Number of Searches:", numSearch);
-    console.log("Number of Minutes:", numMinutes);
-    console.log("Updated Features:", description.split(", "));
+      console.log("Updated Plan Data:", updatedPlan);
 
-    setIsModalOpen(false);
-  }, [planDuration, price, numSearch, numMinutes, description]);
+      // Here, you can make an API request with `updatedPlan`
+      setIsModalOpen(false);
+    },
+    [selectedPlan]
+  );
 
   return (
     <div className="w-full">
@@ -95,100 +123,59 @@ function Subscription() {
       </div>
 
       <Modal
-        width={1200}
+        width={800}
         title="Edit Subscription"
         open={isModalOpen}
         onCancel={handleCancel}
         footer={null}
       >
         <Form
+          form={form}
           requiredMark={false}
           name="basic"
           layout="vertical"
-          initialValues={{ remember: true }}
           onFinish={handleSaveChanges}
-          onFinishFailed={() => console.error("Failed to save changes")}
           autoComplete="off"
           className="grid grid-cols-2 gap-4"
         >
-          <Form.Item
-            label="Plan Duration"
-            name="planDuration"
-            rules={[{ required: true, message: "Please select plan duration" }]}
-            className="col-span-2"
-          >
-            <Radio.Group
-              value={planDuration}
-              onChange={(e) => setPlanDuration(e.target.value)}
-              className="text-white"
-            >
-              <Radio value="monthly">Monthly</Radio>
-              <Radio value="year">Year</Radio>
-            </Radio.Group>
+          <Form.Item label="Plan Duration" name="planDuration">
+            <Select>
+              <Select.Option value="monthly">Monthly</Select.Option>
+              <Select.Option value="yearly">Yearly</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Price" name="price" rules={[{ required: true }]}>
+            <Input />
           </Form.Item>
 
           <Form.Item
-            label="Price"
-            name="price"
-            rules={[{ required: true, message: "Please enter price" }]}
-          >
-            <Input
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="Price"
-              className="dark-input"
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Number of Search"
+            label="Number of Searches"
             name="numSearch"
-            rules={[
-              { required: true, message: "Please enter number of search" },
-            ]}
+            rules={[{ required: true }]}
           >
-            <Input
-              value={numSearch}
-              onChange={(e) => setNumSearch(e.target.value)}
-              placeholder="Number of Search"
-              className="dark-input"
-            />
+            <Input />
           </Form.Item>
 
           <Form.Item
-            label="Number of Minutes"
+            label="Notification Time (minutes)"
             name="numMinutes"
-            rules={[
-              { required: true, message: "Please enter number of minutes" },
-            ]}
-            className="col-span-2"
+            rules={[{ required: true }]}
           >
-            <Input
-              value={numMinutes}
-              onChange={(e) => setNumMinutes(e.target.value)}
-              placeholder="Number of Minutes"
-              className="dark-input"
-            />
+            <Input />
           </Form.Item>
 
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: true, message: "Please enter description" }]}
-            className="col-span-2"
-          >
-            <JoditComponent
-              className=""
-              setContent={setDescription}
-              content={description}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Save
-            </Button>
-          </Form.Item>
+          <div className="w-full col-span-2">
+            <Form.Item className="w-full col-span-2">
+              <Button
+                type="primary"
+                className="w-full !bg-[#08765F]"
+                htmlType="submit"
+              >
+                Save
+              </Button>
+            </Form.Item>
+          </div>
         </Form>
       </Modal>
     </div>

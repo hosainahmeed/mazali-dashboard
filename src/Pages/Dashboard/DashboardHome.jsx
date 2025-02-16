@@ -5,10 +5,10 @@ import SubscriptionGrowth from "../../Components/Chart/SubscriptionGrowth";
 import NewSubscrider from "../../Components/Shared/NewSubscrider";
 function DashboardHome() {
   const overViewDataArray = [
-    { title: "Total User", value: 23 },
+    { title: "Total User", value: 1000},
     { title: "Total Subscriber", value: 44 },
     { title: "Total Category", value: 45 },
-    { title: "Total Earning", value: 43 },
+    { title: "Total Earning", value: 4323 },
   ];
   return (
     <div>

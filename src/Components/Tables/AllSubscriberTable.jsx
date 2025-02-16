@@ -1,9 +1,12 @@
-import React from "react";
-import { Table } from "antd";
+import React, { useState } from "react";
+import { Table, Modal, Space, Button } from "antd";
 import UserImage from "../../Utils/Sideber/UserImage";
-import { Space, Button } from "antd";
 import { IoEyeSharp } from "react-icons/io5";
+
 const AllSubscriberTable = ({ data, pagination }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const paymentDataInformation =
     data.map((payment, index) => ({
       key: payment._id,
@@ -18,6 +21,15 @@ const AllSubscriberTable = ({ data, pagination }) => {
         location: payment?.user?.location || "N/A",
       },
     })) || [];
+
+  const showUserModal = (record) => {
+    setSelectedUser(record.user);
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const columns = [
     {
@@ -59,7 +71,11 @@ const AllSubscriberTable = ({ data, pagination }) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="default" shape="circle">
+          <Button
+            onClick={() => showUserModal(record)}
+            type="default"
+            shape="circle"
+          >
             <IoEyeSharp />
           </Button>
         </Space>
@@ -68,13 +84,51 @@ const AllSubscriberTable = ({ data, pagination }) => {
   ];
 
   return (
-    <Table
-      rowClassName={() => "table-row"}
-      className="mt-2"
-      dataSource={paymentDataInformation}
-      columns={columns}
-      pagination={pagination}
-    />
+    <>
+      <Table
+        rowClassName={() => "table-row"}
+        className="mt-2"
+        dataSource={paymentDataInformation}
+        columns={columns}
+        pagination={pagination}
+      />
+      <Modal
+        title="User Details"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button
+            className="!text-white !bg-[#08765F]"
+            key="back"
+            onClick={handleCancel}
+          >
+            Close
+          </Button>,
+        ]}
+      >
+        {selectedUser && (
+          <div>
+            <UserImage
+              image={selectedUser.profile_image}
+              name={selectedUser.name}
+              email={selectedUser.email}
+            />
+            <p>
+              <strong>Name:</strong> {selectedUser.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedUser.email}
+            </p>
+            <p>
+              <strong>Phone Number:</strong> {selectedUser.phoneNumber}
+            </p>
+            <p>
+              <strong>Location:</strong> {selectedUser.location}
+            </p>
+          </div>
+        )}
+      </Modal>
+    </>
   );
 };
 

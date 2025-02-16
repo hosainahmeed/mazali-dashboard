@@ -9,9 +9,9 @@ const CategoryManage = () => {
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   // Dummy data
   const [categories, setCategories] = useState([
-    { sl_no: 1, name: "Electronics", sub_category: "Mobiles", _id: "1" },
-    { sl_no: 2, name: "Fashion", sub_category: "Clothing", _id: "2" },
-    { sl_no: 3, name: "Home Appliances", sub_category: "Kitchen", _id: "3" },
+    { sl_no: `# ${1}`, name: "Electronics", sub_category: "Mobiles", _id: "1" },
+    { sl_no: `# ${2}`, name: "Fashion", sub_category: "Clothing", _id: "2" },
+    { sl_no: `# ${3}`, name: "Home Appliances", sub_category: "Kitchen", _id: "3" },
   ]);
 
   const handleDelete = (id) => {
@@ -29,7 +29,7 @@ const CategoryManage = () => {
       key: "actions",
       render: (record) => (
         <Popconfirm
-        placement="topLeft"
+          placement="topLeft"
           title="Confirm Deletion"
           description="Are you sure you want to delete this category?"
           onConfirm={() => handleDelete(record._id)}
@@ -63,7 +63,7 @@ const CategoryManage = () => {
       </div>
       <Table columns={columns} dataSource={categories} rowKey="_id" />
       <Modal
-       className="addcategory"
+        className="addcategory"
         open={categoryModalOpen}
         onCancel={() => setCategoryModalOpen(false)}
         footer={false}
