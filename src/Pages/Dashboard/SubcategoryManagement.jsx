@@ -10,9 +10,9 @@ const SubcategoryManagement = () => {
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   // Dummy data
   const [categories, setCategories] = useState([
-    { sl_no: 1, name: "Electronics", sub_category: "Mobiles", _id: "1" },
-    { sl_no: 2, name: "Fashion", sub_category: "Clothing", _id: "2" },
-    { sl_no: 3, name: "Home Appliances", sub_category: "Kitchen", _id: "3" },
+    { sl_no: `# ${1}`, name: "Electronics", sub_category: "Mobiles", _id: "1" },
+    { sl_no: `# ${2}`, name: "Fashion", sub_category: "Clothing", _id: "2" },
+    { sl_no: `# ${3}`, name: "Home Appliances", sub_category: "Kitchen", _id: "3" },
   ]);
 
   const handleDelete = (id) => {

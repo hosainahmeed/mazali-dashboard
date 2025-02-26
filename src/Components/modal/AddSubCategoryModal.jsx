@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Input, Button, Select } from "antd";
+import React from 'react';
+import { Form, Input, Button, Select } from 'antd';
 
 const AddSubCategoryModal = ({ visible, onClose, onAdd }) => {
   const [form] = Form.useForm();
@@ -10,7 +10,6 @@ const AddSubCategoryModal = ({ visible, onClose, onAdd }) => {
       minPrice: values.minPrice,
       maxPrice: values.maxPrice,
     });
-
     // try {
     //   await onAdd(values);
     //   onClose();
@@ -20,9 +19,9 @@ const AddSubCategoryModal = ({ visible, onClose, onAdd }) => {
   };
 
   const categories = [
-    { _id: "1", name: "Electronics" },
-    { _id: "2", name: "Fashion" },
-    { _id: "3", name: "Home Appliances" },
+    { _id: '1', name: 'Electronics' },
+    { _id: '2', name: 'Fashion' },
+    { _id: '3', name: 'Home Appliances' },
   ];
 
   return (
@@ -35,9 +34,9 @@ const AddSubCategoryModal = ({ visible, onClose, onAdd }) => {
     >
       <Form.Item
         className="col-span-2"
-        label={<p className="text-white">Select Category</p>}
+        label={<p className="text-white  text-2xl mb-3">Select Category</p>}
         name="category"
-        rules={[{ required: true, message: "Please select category!" }]}
+        rules={[{ required: true, message: 'Please select category!' }]}
       >
         <Select placeholder="Select Category">
           {categories.map((category) => (
@@ -51,27 +50,21 @@ const AddSubCategoryModal = ({ visible, onClose, onAdd }) => {
         className="col-span-2"
         label={<p className="text-white">Subcategory Name</p>}
         name="subcategoryName"
-        rules={[{ required: true, message: "Please input subcategory name!" }]}
+        rules={[{ required: true, message: 'Please input subcategory name!' }]}
       >
         <Input placeholder="type here..." />
       </Form.Item>
       <Form.Item
         label={<p className="text-white">Min Price</p>}
         name="minPrice"
-        rules={[
-          { required: true, message: "Please input min price!" },
-          { type: "number", message: "Min price must be a number!" }
-        ]}
+        required
       >
         <Input type="number" placeholder="type here..." />
       </Form.Item>
       <Form.Item
         label={<p className="text-white">Max Price</p>}
         name="maxPrice"
-        rules={[
-          { required: true, message: "Please input max price!" },
-          { type: "number", message: "Max price must be a number!" }
-        ]}
+        required
       >
         <Input type="number" placeholder="type here..." />
       </Form.Item>
@@ -96,4 +89,3 @@ const AddSubCategoryModal = ({ visible, onClose, onAdd }) => {
 };
 
 export default AddSubCategoryModal;
-

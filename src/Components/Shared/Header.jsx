@@ -1,19 +1,22 @@
-import React from "react";
-import { Avatar, Button, Dropdown, Menu } from "antd";
-import { CiCircleQuestion } from "react-icons/ci";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
-import { Link } from "react-router";
-import logo from "../../assets/logo.svg";
+import React from 'react';
+import { Avatar, Button, Dropdown, Menu } from 'antd';
+import { CiCircleQuestion } from 'react-icons/ci';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router';
+import logo from '../../assets/logo.svg';
+
 function Header() {
+  const navigate = useNavigate();
   const user = {
-    photoURL: "https://cdn-icons-png.flaticon.com/512/219/219988.png",
-    displayName: "Micheal Scott",
-    email: "Micheal46@gmail.com",
+    photoURL: 'https://cdn-icons-png.flaticon.com/512/219/219988.png',
+    displayName: 'Micheal Scott',
+    email: 'Micheal46@gmail.com',
   };
 
   const handleSignOut = () => {
-    console.log("sign out");
+    console.log('sign out');
+    navigate('/login');
   };
 
   const menu = (
@@ -41,7 +44,7 @@ function Header() {
     <div className="px-10 border-b-[1px] border-[#6d6d6d] h-16 flex justify-between items-center">
       <img className="h-8" src={logo} alt="DealScout" />
       <div className="flex items-center  gap-4 text-2xl">
-        <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
           <Avatar size={40} src={user?.photoURL} className="cursor-pointer" />
         </Dropdown>
       </div>
@@ -50,3 +53,4 @@ function Header() {
 }
 
 export default Header;
+

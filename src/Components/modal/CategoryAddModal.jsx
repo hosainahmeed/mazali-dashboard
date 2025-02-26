@@ -23,7 +23,7 @@ const CategoryAddModal = ({ visible, onClose, onAdd }) => {
       onFinish={handleSubmit}
     >
       <Form.Item
-        label={<p className="text-white">Add Category</p>}
+        label={<p className="text-white text-2xl mb-3">Add Category</p>}
         name="categoryName"
         rules={[{ required: true, message: "Please input category name!" }]}
       >
