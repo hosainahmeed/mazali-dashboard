@@ -3,6 +3,7 @@ import { Form, Button, Typography, Input } from 'antd';
 import 'antd/dist/reset.css';
 import { EyeTwoTone } from '@ant-design/icons';
 import { useNavigate } from 'react-router';
+import Logo from '../../Components/Shared/Logo';
 
 const { Title } = Typography;
 
@@ -23,12 +24,12 @@ const ResetPassword = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#292929] p-4">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg text-center">
+      <div className="bg-white shadow-lg relative rounded-2xl p-6 w-full max-w-lg text-center">
         <Title level={3} className="text-blue-500">
-          {/* <Logo /> */}
+          <Logo />
         </Title>
         <div className="flex mb-6 flex-col items-start">
-          <Title level={4} className="mb-1">
+          <Title level={3} className="mb-1">
             Create new password
           </Title>
           <h1 className="text-sm text-gray-500">

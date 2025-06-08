@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, use } from 'react';
 import { Typography, Input, Button } from 'antd';
 import { Link, useNavigate } from 'react-router';
+import Logo from '../../Components/Shared/Logo';
 // import Logo from '../../components/ui/Logo';
 
 const { Title, Text } = Typography;
@@ -34,16 +35,16 @@ const Otp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#292929] p-4">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg text-center">
+    <div className="flex justify-center  items-center min-h-screen bg-[#292929] p-4">
+      <div className="bg-white shadow-lg relative rounded-2xl p-6 w-full max-w-lg text-center">
         <Title level={3} className="text-blue-500">
-          {/* <Logo /> */}
+          <Logo />
         </Title>
         <div className="flex items-start flex-col text-start">
-          <Title level={1} className="mb-2">
+          <Title level={3} className="mb-2">
             Reset Password
           </Title>
-          <h1 className="text-base font-extralight text-[var(--body-text)]">
+          <h1 className="text-sm font-extralight text-[var(--text)]">
             We sent a 6-digit OTP to{' '}
             <strong className="text-[#111]">micheal@gmail.com</strong>. Please
             input it below.
