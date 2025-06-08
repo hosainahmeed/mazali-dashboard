@@ -4,7 +4,6 @@ import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import Login from "../Pages/Auth/Login";
 import ForgetPassword from "../Pages/Auth/ForgetPassword";
 import Otp from "../Pages/Auth/Otp";
-import ResetPassword from "../Pages/Auth/ResetPassword";
 import { createBrowserRouter } from "react-router";
 import UserManage from "../Pages/Dashboard/UserManage";
 import TermsCondition from "../Pages/Dashboard/TermsCondition";
@@ -14,6 +13,7 @@ import AllSubscriber from "../Pages/Dashboard/AllSubscriber.jsx";
 import Subscription from "../Pages/Dashboard/Subscription.jsx";
 import CategoryManage from "../Pages/Dashboard/CategoryManage.jsx";
 import SubcategoryManagement from "../Pages/Dashboard/SubcategoryManagement.jsx";
+import ResetPassword from "../../../navid-dashboard/src/Pages/Auth/ResetPassword.jsx";
 
 export const Routes = createBrowserRouter([
   {
@@ -63,7 +63,7 @@ export const Routes = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/forgot-password",
+    path: "/forget-password",
     element: <ForgetPassword />,
   },
   {

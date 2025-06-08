@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
 import 'antd/dist/reset.css';
 import { useNavigate } from 'react-router';
+// import Logo from '../../Components/Shared/Logo';
 
 const { Title, Text } = Typography;
 
@@ -15,12 +16,12 @@ const ForgetPassword = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#292929] p-4">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg text-center">
+      <div className="bg-white relative shadow-lg rounded-2xl p-6 w-full max-w-lg text-center">
         <Title level={3} className="text-blue-500">
           {/* <Logo /> */}
         </Title>
         <div className="flex mb-6 flex-col items-start">
-          <Title level={2} className="mb-1">
+          <Title level={3} className="mb-1">
             Forgot Password
           </Title>
           <Text type="secondary">
